@@ -1,0 +1,110 @@
+//1.1/////////////////////////////////////////////////////////////////
+#include <iostream>
+using namespace std;
+int main(){
+    int x, y;
+    cin >> x >> y;
+    //Точка в начале координат
+    if (x == 0 and y == 0){
+        cout << 0;
+    }
+    //Точка на оси координат
+    else if (x == 0 or y == 0){
+        if (x == 0 and y > 0){
+            cout << 1 << " " << 2;
+        }
+        else if(x == 0 and y < 0){
+            cout << 3 << " " << 4;
+        }
+        else if(y == 0 and x > 0){
+            cout << 1 << " " << 4;
+        }
+        else if(y == 0 and x < 0){
+            cout << 2 << " " << 3;
+        }
+    }
+    //Точка в одной из четвертей
+    else if(x > 0){ //1|4
+        cout << (y > 0? 1:4);
+    }
+    else if(x < 0){ //2|3
+        cout << (y > 0?2:3);
+    }
+    return 0;
+}
+
+//1.2/////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+
+double distance_counter(int x1, int y1, int x2, int y2){
+    return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));}
+
+int main(){
+    vector <vector<int>> circles; //= {{x1,y1,r1},{x2,y2,r2},{x3,y3,r3}}
+    
+    for (size_t i = 0; i != 3; ++i){
+        vector <int> temp(3); //x,y,r
+        for(size_t j = 0; j != 3; ++j){
+            cin >> temp[j];
+        }
+        circles.push_back(temp);
+    }
+    /*Алгоритм:
+    считаем расстояния между центрами окружностей (double v), потом проверяем, является ли расстояние между центрами двух
+    окружностей меньше/равно чем сумма радиусов этих окружностей (проверяем окружности на пересечение), если все 3 
+    пересекаются, то существует точка в 3-х окружностях*/
+    double v1_2 = distance_counter(circles[0][0], circles[0][1], circles[1][0], circles[1][1]);
+    double v1_3 = distance_counter(circles[0][0], circles[0][1], circles[2][0], circles[2][1]);
+    double v2_3 = distance_counter(circles[1][0], circles[1][1], circles[2][0], circles[2][1]);
+    
+    bool flag1 = false;
+    if (v1_2 <= circles[0][2]+circles[1][2]){
+        if (v1_3 <= circles[0][2]+circles[2][2]){
+            if (v2_3 <= circles[1][2]+circles[2][2]){
+                flag1 = true;
+            }
+            else{}
+        }
+        else{}
+    }
+    else{}
+    
+    cout << (flag1 == true? "YES":"NO");
+    return 0;
+}
+//2.1/////////////////////////////////////////////////////////////////
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b, d;
+    cin >> a >> b >> d;
+    int ai = a;
+    while (true){
+        if (!(ai >= a and ai<= b)){
+            break;
+        }
+        if(ai%3 == 0){
+            cout << ai << " ";
+        }
+        ai+=d;
+    }
+    return 0;
+}
+//2.2///////////////////////////////////////////////////////////////
+Код может работать только для n<10, тк иначе будет переполнение
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main(){
+    int n;
+    cin >> n;
+    long long s = 0;
+    for (int i = 1; i <= n; ++i){
+        s+= (long long )pow(i, i);
+    }
+    cout << s;
+}
