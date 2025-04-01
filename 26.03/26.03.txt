@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+/*Тест:
+s = cbaebabacd
+p = abc*/
+int main(){
+    string s;
+    string p;
+    getline(cin, s);
+    getline(cin, p);
+    vector <int> v;
+    string s1 = s;
+    for (size_t i = 0; i != s.size(); ++i){
+        string st = s1.substr(i, p.size());
+        int s_p = 0;
+        int s_t = 0;
+        for(size_t j = 0; j != p.size(); ++j){
+            s_p += (int) p[j];
+            s_t += (int) st[j];
+        }
+        if (s_p == s_t){
+            v.push_back(i);
+        }
+    }
+    for (int i : v){
+        cout << i << " ";
+    }
+    return 0;
+}
