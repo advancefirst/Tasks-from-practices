@@ -1,0 +1,117 @@
+//1)///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <vector>
+using namespace std;
+ 
+int main()
+{
+vector <int> a(10);
+for(int ix = 0; ix <= 9; ++ix){
+    cin >> a[ix];
+}
+for(int ix = 0; ix <= 9; ++ix){
+    cout << a[ix] << " ";
+}
+return 0;
+}
+
+//2)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
+using namespace std;
+ 
+int main()
+{
+srand(time(0));
+int num = rand() % 100;
+int nick = -1;
+int trycount = 0;
+ 
+while(nick != num and trycount < 8)
+{
+cout << "Угадайте число: ";
+cin >> nick;
+trycount++;
+ 
+if (nick < num){
+    cout << "Больше" << endl;
+}
+ 
+else if (nick > num){
+    cout << "Меньше" << endl;
+}
+}
+ 
+if(nick == num){
+cout << "Вы угадали число" << endl;}
+else{
+cout << "Извините, вы не смогли угадать число:" << num << endl;}
+return 0;
+}
+//3)//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#include "stdafx.h"
+//#include <Windows.h>
+#include <string>
+#include <iostream>
+ 
+using namespace std;
+ 
+double addnumber(int num1, int num2)
+{
+return num1 + num2;
+}
+ 
+double multiplynumb(int num1, int num2)
+{
+return num1 * num2;
+}
+ 
+double subtractnumb(int num1, int num2)
+{
+return num1 - num2;
+}
+ 
+double dividenumb(int num1, int num2)
+{
+return num1 / num2;
+}
+ 
+int main(){
+char operation = 'c';
+int num1, num2;
+ 
+while(operation != 'e')
+{
+cout << "Выберите операцию: сложение(+), вычитание(-), деление(/), умножение(*), выход (e): ";
+cin >> operation;
+
+switch(operation){
+    case '+':
+        cin >> num1;
+        cin >> num2;
+        cout << num1 << " " << "+" << " " << num2 << " " << "=" << " " << addnumber(num1,num2) << endl;
+        break;
+    case '-':
+        cin >> num1;
+        cin >> num2;
+        cout << num1 << " " << "-" << " " << num2 << " " << "=" << " " << subtractnumb(num1,num2) << endl;
+        break;
+    case '/':
+        cin >> num1;
+        cin >> num2;
+        cout << num1 << " " << "/" << " " << num2 << " " << "=" << " " << dividenumb(num1,num2) << endl;
+        break;
+    case '*':
+        cin >> num1;
+        cin >> num2;
+        cout << num1 << " " <<  "*" << " " << num2 << " " << "=" << " " << multiplynumb(num1,num2) << endl;
+        break;
+    case 'e':
+        break;
+    default:
+        cout << "Неправильный ввод" << endl;
+}}
+return 0;
+}
