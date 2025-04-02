@@ -1,0 +1,70 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+void printing_matrix(int a[3][3]){
+    for (int i = 0; i != 3; ++i){
+        for (int j = 0; j != 3; ++j){
+            cout << setw(2) << a[i][j];
+        }
+        cout << "\n";
+    }
+} //функция вывода массива
+
+void shift_circle(int a[3][3]){
+    int starting_element = a[0][0];
+    int tde = a[0][2];
+    //проход вправо
+    for (int j = 0; j != 2; ++j){
+        int temp = a[0][j+1];
+        a[0][j+1] = starting_element;
+        starting_element = temp;
+    }
+    //проход вниз
+    for (int i = 0; i != 2; ++i){
+        int temp = a[i+1][2];
+        a[i+1][2] = tde;
+        tde = temp;
+    }
+    //проход влево
+    for (int j = 2; j != 0; --j){
+        int temp = a[2][j-1];
+        a[2][j-1] = tde;
+        tde = temp;
+    }
+    //проход вверх
+    for (int i = 2; i != 0; --i){
+        int temp = a[i-1][0];
+        a[i-1][0] = tde;
+        tde = temp;
+    }
+} //функция сдвига массива 
+
+bool matrix_shifter_game(int a[3][3]){
+    cout << "Текущее состояние матрицы:" << endl;
+    printing_matrix(a);
+    cout << "Нажмите Enter для сдвига или любую клавишу + Enter для выхода" << endl;
+    if (cin.get() != '\n'){
+        return false;
+    }
+    return true;
+} //функция продолжения/прерывания
+
+int main(){
+    int a[3][3];
+    for (int i = 0; i != 3; ++i){
+        for (int j = 0; j != 3; ++j){
+            cin >> a[i][j];
+        }
+    }
+    int c = -1;
+    while (true){
+        if (matrix_shifter_game(a)){
+            shift_circle(a);
+        }
+        else{
+            break;
+        }
+    }
+    return 0;
+}
