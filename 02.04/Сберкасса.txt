@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int time_left = 2 * 60 * 60; // 2 часа в секундах
+    int served = 0;
+    int t = 9 * 60 + 15;
+
+    while (served < 40 && time_left >= t) {
+        time_left -= t;
+        served++;
+        t = max(0, t - 10);
+    }
+
+    cout << "Обслужено бабушек: " << served << endl;
+    return 0;
+}

@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int coins = 10;
+    string input;
+    srand(time(0));
+
+    cout << "У Вани 10 монет. Цель — дойти до 20 монет. 'орел' — выигрыш, 'решка' — проигрыш." << endl;
+
+    while (coins > 0 && coins < 20) {
+        int bet;
+        cout << "\nУ тебя " << coins << " монет. Сделай ставку (1.." << coins << "): ";
+        cin >> bet;
+
+        if (bet < 1 || bet > coins) {
+            cout << "Неверная ставка.\n";
+            continue;
+        }
+
+        int toss = rand() % 2;
+        if (toss == 0) { // орел
+            coins += bet;
+            cout << "Орел! Ты выиграл " << bet << " монет. Теперь у тебя " << coins << "." << endl;
+        } else { // решка
+            coins -= bet;
+            cout << "Решка. Ты проиграл " << bet << " монет. Теперь у тебя " << coins << "." << endl;
+        }
+
+        if (coins == 0) {
+            cout << "У тебя закончились монеты. Игра окончена.\n";
+            break;
+        }
+
+        if (coins >= 20) {
+            cout << "Поздравляем! Ты удвоил деньги и выиграл игру!\n";
+            break;
+        }
+
+        cout << "Хочешь продолжить? (да/нет): ";
+        cin >> input;
+        if (input != "да")
+            break;
+    }
+
+    cout << "Игра завершена. Остаток монет: " << coins << endl;
+    return 0;
+}

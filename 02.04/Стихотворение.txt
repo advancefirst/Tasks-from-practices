@@ -1,0 +1,18 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    double time_limit = 2 * 60 + 45; // в минутах
+    double total = 0, t = 1.0;
+    int lines = 0;
+
+    while (lines < 40 && total + t <= time_limit) {
+        total += t;
+        t *= 1.1;
+        lines++;
+    }
+
+    cout << "Выучено строк: " << lines << endl;
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    double daily = 10.0, total = 0.0;
+    int day20 = -1, day100 = -1;
+
+    for (int day = 1; ; ++day) {
+        total += daily;
+
+        if (daily > 20.0 && day20 == -1)
+            day20 = day;
+
+        if (total > 100.0 && day100 == -1)
+            day100 = day;
+
+        if (day == 7)
+            cout << "Суммарно за 7 дней: " << fixed << setprecision(2) << total << " км" << endl;
+
+        if (day20 != -1 && day100 != -1 && day >= 7)
+            break;
+
+        daily *= 1.1;
+    }
+
+    cout << "День, когда > 20 км: " << day20 << endl;
+    cout << "День, когда > 100 км суммарно: " << day100 << endl;
+
+    return 0;
+}
