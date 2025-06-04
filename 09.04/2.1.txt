@@ -1,0 +1,21 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    // Стратегия:
+    // Коробка 1: 1 красная таблетка
+    // Коробка 2: 49 красных + 50 синих таблеток
+
+    double p_box1 = 0.5;                  // Вероятность выбрать коробку 1
+    double p_box2 = 0.5;                  // Вероятность выбрать коробку 2
+    double p_red_from_box1 = 1.0;         // В коробке 1 только красная
+    double p_red_from_box2 = 49.0 / 99.0; // В коробке 2: 49 красных из 99
+
+    double total_probability = p_box1 * p_red_from_box1 + p_box2 * p_red_from_box2;
+
+    cout << fixed << setprecision(5);
+    cout << "Максимальная вероятность получить красную таблетку: " << total_probability << endl;
+
+    return 0;
+}

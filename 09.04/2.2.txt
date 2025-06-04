@@ -1,0 +1,21 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    double H = 5.0;
+    double k = 0.004;
+
+    double exp_kH = exp(k * H);
+
+    double numerator = (H / k) * exp_kH - (1 / (k * k)) * exp_kH + (1 / (k * k));
+    double denominator = (1 / k) * (exp_kH - 1);
+
+    double y_center = numerator / denominator;
+
+    cout << fixed << setprecision(5);
+    cout << "Центр тяжести водяного столба на глубине: " << y_center << " км" << endl;
+
+    return 0;
+}

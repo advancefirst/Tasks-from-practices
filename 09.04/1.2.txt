@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<double> a(n);
+
+    for (int i = 0; i < n; ++i)
+        cin >> a[i];
+
+    int min_index = 0;
+    for (int i = 1; i < n; ++i)
+        if (a[i] < a[min_index])
+            min_index = i;
+
+    int first_neg = -1, second_neg = -1;
+    for (int i = 0; i < n; ++i) {
+        if (a[i] < 0) {
+            if (first_neg == -1)
+                first_neg = i;
+            else {
+                second_neg = i;
+                break;
+            }
+        }
+    }
+
+    double product = 1;
+    if (first_neg != -1 && second_neg != -1 && second_neg - first_neg > 1) {
+        for (int i = first_neg + 1; i < second_neg; ++i)
+            product *= a[i];
+    } else {
+        product = 0;
+    }
+
+    vector<double> result;
+    for (int i = 0; i < n; ++i)
+        if (abs(a[i]) <= 1)
+            result.push_back(a[i]);
+    for (int i = 0; i < n; ++i)
+        if (abs(a[i]) > 1)
+            result.push_back(a[i]);
+
+    cout << "номер минимального элемента = " << min_index << endl;
+    cout << "произведение = " << product << endl;
+
+    for (double x : result)
+        cout << x << " ";
+    cout << endl;
+
+    return 0;
+}
