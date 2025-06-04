@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include <algorithm>
+using namespace std;
+
+bool isValid(const string& s) {
+    int balance = 0;
+    for (char c : s) {
+        if (c == '(') balance++;
+        else if (c == ')') {
+            balance--;
+            if (balance < 0) return false;
+        }
+    }
+    return balance == 0;
+}
+
+void dfs(const string& s, int index, int leftRem, int rightRem, string path, int balance,
+         set<string>& result, int& maxLen) {
+    if (index == s.size()) {
+        if (balance == 0 && leftRem == 0 && rightRem == 0) {
+            if (path.size() >= maxLen) {
+                if (path.size() > maxLen) {
+                    result.clear();
+                    maxLen = path.size();
+                }
+                result.insert(path);
+            }
+        }
+        return;
+    }
+
+    char c = s[index];
+
+    if (c == '(') {
+        if (leftRem > 0)
+            dfs(s, index + 1, leftRem - 1, rightRem, path, balance, result, maxLen);
+        dfs(s, index + 1, leftRem, rightRem, path + c, balance + 1, result, maxLen);
+    } else if (c == ')') {
+        if (rightRem > 0)
+            dfs(s, index + 1, leftRem, rightRem - 1, path, balance, result, maxLen);
+        if (balance > 0)
+            dfs(s, index + 1, leftRem, rightRem, path + c, balance - 1, result, maxLen);
+    } else {
+        dfs(s, index + 1, leftRem, rightRem, path + c, balance, result, maxLen);
+    }
+}
+
+int main() {
+    string s;
+    cin >> s;
+
+    int leftRem = 0, rightRem = 0;
+    for (char c : s) {
+        if (c == '(') leftRem++;
+        else if (c == ')') {
+            if (leftRem > 0) leftRem--;
+            else rightRem++;
+        }
+    }
+
+    set<string> result;
+    int maxLen = 0;
+    dfs(s, 0, leftRem, rightRem, "", 0, result, maxLen);
+
+    for (const string& str : result)
+        cout << str << endl;
+
+    return 0;
+}

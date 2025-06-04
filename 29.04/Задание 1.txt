@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+using namespace std;
+
+string abbreviate(const string& s, set<string>& used) {
+    int n = s.size();
+
+    for (int len = 1; len <= n / 2; ++len) {
+        string prefix = s.substr(0, len);
+        string suffix = s.substr(n - len, len);
+        int mid_len = n - 2 * len;
+
+        if (mid_len <= 0) continue;
+
+        string abbr = prefix + to_string(mid_len) + suffix;
+
+        if (used.find(abbr) == used.end()) {
+            used.insert(abbr);
+            return abbr;
+        }
+    }
+
+    if (used.find(s) == used.end()) {
+        used.insert(s);
+        return s;
+    }
+
+    // В теории не должно сюда дойти
+    return s;
+}
+
+int main() {
+    int t;
+    cin >> t;
+    vector<string> input(t);
+    for (int i = 0; i < t; ++i)
+        cin >> input[i];
+
+    set<string> used;
+
+    for (int i = 0; i < t; ++i)
+        cout << abbreviate(input[i], used) << endl;
+
+    return 0;
+}
