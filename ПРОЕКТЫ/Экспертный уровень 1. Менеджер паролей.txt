@@ -1,0 +1,68 @@
+/*
+1. Менеджер паролей 
+
+Это приложение с графическим пользовательским интерфейсом, которое можно использовать для хранения пароля
+ вместе с именем пользователя. Все данные будут зашифрованы для обеспечения большей безопасности и будут 
+расшифровываться по запросу. Каждый пароль также будет скрыт за стеной, которую мы сможем преодолеть с помощью пароля приложения.  
+*/
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <algorithm>
+using namespace std;
+
+string encrypt(const string& data, const string& key) {
+    string result = data;
+    for (size_t i = 0; i < data.size(); ++i)
+        result[i] = data[i] ^ key[i % key.size()];
+    return result;
+}
+
+int main() {
+    string master_password;
+    cout << "Введите пароль приложения: ";
+    cin >> master_password;
+
+    map<string, pair<string, string>> vault; // service -> (username, encrypted password)
+
+    while (true) {
+        cout << "\n1. Добавить\n2. Посмотреть\n3. Выход\nВыбор: ";
+        int choice;
+        cin >> choice;
+
+        if (choice == 1) {
+            string service, login, password;
+            cout << "Сервис: ";
+            cin >> service;
+            cout << "Имя пользователя: ";
+            cin >> login;
+            cout << "Пароль: ";
+            cin >> password;
+
+            string encrypted = encrypt(password, master_password);
+            vault[service] = make_pair(login, encrypted);
+            cout << "Сохранено." << endl;
+
+        } else if (choice == 2) {
+            string service;
+            cout << "Введите название сервиса: ";
+            cin >> service;
+            if (vault.count(service)) {
+                string login = vault[service].first;
+                string encrypted = vault[service].second;
+                string decrypted = encrypt(encrypted, master_password);
+                cout << "Логин: " << login << "\nПароль: " << decrypted << endl;
+            } else {
+                cout << "Сервис не найден.\n";
+            }
+
+        } else if (choice == 3) {
+            break;
+        } else {
+            cout << "Неверный выбор.\n";
+        }
+    }
+
+    return 0;
+}

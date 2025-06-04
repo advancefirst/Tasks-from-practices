@@ -1,0 +1,76 @@
+/*
+3. Крестики-нолики 
+
+«Крестики-нолики» — классическая игра для двух игроков, написанная на C++. 
+В этой игре каждый игрок по очереди расставляет крестики и нолики на доске 3×3, стремясь выстроить три своих фигуры 
+в ряд (по горизонтали, вертикали или диагонали). Игра заканчивается победой, когда игрок выстраивает три фигуры в ряд,
+ и ничьей, если доска заполняется, но ни один из игроков не выигрывает. 
+*/
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+void printBoard(const vector<vector<char>>& board) {
+    for (const auto& row : board) {
+        for (char cell : row)
+            cout << (cell == ' ' ? '.' : cell) << " ";
+        cout << endl;
+    }
+}
+
+bool checkWin(const vector<vector<char>>& b, char player) {
+    for (int i = 0; i < 3; ++i)
+        if ((b[i][0] == player && b[i][1] == player && b[i][2] == player) ||
+            (b[0][i] == player && b[1][i] == player && b[2][i] == player))
+            return true;
+
+    if ((b[0][0] == player && b[1][1] == player && b[2][2] == player) ||
+        (b[0][2] == player && b[1][1] == player && b[2][0] == player))
+        return true;
+
+    return false;
+}
+
+bool isDraw(const vector<vector<char>>& board) {
+    for (const auto& row : board)
+        if (find(row.begin(), row.end(), ' ') != row.end())
+            return false;
+    return true;
+}
+
+int main() {
+    vector<vector<char>> board(3, vector<char>(3, ' '));
+    char current = 'X';
+
+    while (true) {
+        printBoard(board);
+        int row, col;
+        cout << "Ход игрока " << current << " (строка и столбец 0..2): ";
+        cin >> row >> col;
+
+        if (row < 0 || row > 2 || col < 0 || col > 2 || board[row][col] != ' ') {
+            cout << "Неверный ход. Попробуйте снова.\n";
+            continue;
+        }
+
+        board[row][col] = current;
+
+        if (checkWin(board, current)) {
+            printBoard(board);
+            cout << "Игрок " << current << " победил!" << endl;
+            break;
+        }
+
+        if (isDraw(board)) {
+            printBoard(board);
+            cout << "Ничья!" << endl;
+            break;
+        }
+
+        current = (current == 'X') ? 'O' : 'X';
+    }
+
+    return 0;
+}
